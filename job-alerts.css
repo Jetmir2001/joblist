@@ -1,0 +1,100 @@
+ body {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background: #007bff;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+header .back-link {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header .back-link:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.alert-form-card, .alert-list-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.btn {
+  padding: 12px 20px;
+  background: #007bff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #0056b3;
+}
+
+#alertList {
+  list-style: none;
+  padding: 0;
+}
+
+#alertList li {
+  background: #f4f4f4;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#alertList button {
+  background: crimson;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#alertList button:hover {
+  background: darkred;
+}

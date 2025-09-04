@@ -1,0 +1,124 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing & Contact - MyCompany</title>
+  <link rel="stylesheet" href="pricing.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">MyCompany</div>
+      <nav>
+        <a href="#plans">Plans</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="menu-toggle">&#9776;</div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Choose the Plan That Fits Your Business</h1>
+    <p>Simple pricing for growing companies. Upgrade anytime as your business scales.</p>
+    <a href="#plans" class="hero-btn">View Plans</a>
+  </section>
+
+  <!-- Pricing / Plans Section -->
+ <section class="plans" id="plans">
+  <h2>Our Plans</h2>
+  <div class="plan-cards">
+    <div class="plan-card">
+      <h3>Basic</h3>
+      <p class="price">$29/month</p>
+      <ul>
+        <li>5 Projects</li>
+        <li>Email Support</li>
+        <li>Basic Analytics</li>
+      </ul>
+      <button class="cta-btn select-plan">Get Started</button>
+    </div>
+    <div class="plan-card featured">
+      <h3>Pro</h3>
+      <p class="price">$79/month</p>
+      <ul>
+        <li>20 Projects</li>
+        <li>Priority Support</li>
+        <li>Advanced Analytics</li>
+      </ul>
+      <button class="cta-btn select-plan">Get Started</button>
+    </div>
+    <div class="plan-card">
+      <h3>Enterprise</h3>
+      <p class="price">$149/month</p>
+      <ul>
+        <li>Unlimited Projects</li>
+        <li>Dedicated Support</li>
+        <li>Full Analytics & Reports</li>
+      </ul>
+      <button class="cta-btn select-plan">Get Started</button>
+    </div>
+  </div>
+</section>
+
+
+  <section class="benefits" id="features">
+  <h2>Why Choose MyCompany?</h2>
+  <div class="benefit-cards">
+    <div class="benefit-card">
+      <h3>Innovative Solutions</h3>
+      <p>We deliver creative, custom solutions that solve real business challenges.</p>
+    </div>
+    <div class="benefit-card">
+      <h3>Expert Team</h3>
+      <p>Our experienced team ensures top-quality service and support for your growth.</p>
+    </div>
+    <div class="benefit-card">
+      <h3>Reliable Support</h3>
+      <p>Continuous support to make sure your operations run smoothly at all times.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials" id="testimonials">
+  <h2>What Our Clients Say</h2>
+  <div class="testimonial-cards">
+    <div class="testimonial-card active">
+      <p>"MyCompany transformed our workflow and increased productivity significantly!"</p>
+      <h4>- John Doe, CEO</h4>
+    </div>
+    <div class="testimonial-card">
+      <p>"Exceptional service and attention to detail. Highly recommended."</p>
+      <h4>- Jane Smith, Marketing Head</h4>
+    </div>
+    <div class="testimonial-card">
+      <p>"Professional, fast, and reliable. Great experience overall."</p>
+      <h4>- Mike Johnson, CTO</h4>
+    </div>
+  </div>
+</section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>Have questions? Fill out the form below and we’ll get back to you shortly.</p>
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <textarea id="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="cta-btn">Submit</button>
+      <p id="formMessage" class="success-message"></p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 MyCompany. All Rights Reserved.
+  </footer>
+
+  <script src="pricing.js"></script>
+</body>
+</html>

@@ -1,0 +1,631 @@
+ /* styles.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #004080;
+  color: #fff;
+}
+
+.nav-actions button {
+  margin-left: 15px;
+  padding: 8px 15px;
+  background: #fff;
+  color: #004080;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li {
+  margin: 0 15px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  color: #ffdd57;
+}
+
+.nav-actions button {
+  margin-left: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.nav-actions .login-btn {
+  background: #ffffff;
+  color: #0077cc;
+}
+
+.nav-actions .login-btn:hover {
+  background: #e0e0e0;
+}
+
+.nav-actions .create-btn {
+  background: #ffdd57;
+  color: #0077cc;
+}
+
+.nav-actions .create-btn:hover {
+  background: #f5c000;
+}
+
+/* Responsive */
+
+
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .navbar {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #004080;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .navbar.show {
+    max-height: 400px; /* adjust depending on number of links */
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 0;
+     opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+   .navbar.show ul {
+    opacity: 1;
+  }
+
+  .navbar ul li {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* Filter Section */
+.search-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.search-section input,
+.search-section select {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  min-width: 180px;
+  transition: all 0.3s;
+}
+
+.search-section input:focus,
+.search-section select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.5);
+}
+
+.search-section button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.search-section button:hover {
+  background-color: #0056b3;
+}
+
+/* Categories Buttons */
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.categories button {
+  padding: 8px 15px;
+  border: 1px solid #007bff;
+  background-color: white;
+  color: #007bff;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.categories button.active,
+.categories button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* No Results Message */
+#no-results {
+  text-align: center;
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-top: 15px;
+  display: none;
+}
+
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.categories button {
+  background: #ffffff;
+  color: #0077cc;
+  border: 1px solid #0077cc;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.categories button:hover,
+.categories button.active {
+  background: #0077cc;
+  color: white;
+}
+
+
+
+.job-listings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.job-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.job-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.job-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0a66c2; /* LinkedIn blue */
+}
+
+.job-card p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.job-card p strong {
+  color: #333;
+}
+
+.job-card .btn1,
+.job-card .btn-save {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.job-card .btn1 {
+  background-color: #0a66c2;
+  color: #fff;
+}
+
+.job-card .btn1:hover {
+  background-color: #004182;
+}
+
+.job-card .btn-save {
+  background-color: #e7f3ff;
+  color: #0a66c2;
+  margin-left: 5px;
+}
+
+.job-card .btn-save.saved {
+  background-color: #cce5ff;
+  color: #004182;
+}
+
+@media (max-width: 768px) {
+  .job-listings {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+}
+
+
+
+
+
+.btn1{
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px;
+  background: #0077cc;
+  color: white;
+  cursor: pointer;
+}
+
+footer.footer {
+  background: linear-gradient(135deg, #1a0186, #0056b3);
+  color: #fff;
+  padding: 60px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-brand h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.footer-brand p {
+  color: #ddd;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links li a {
+  text-decoration: none;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.footer-links li a:hover {
+  color: #ff6b6b;
+}
+
+.footer-contact p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.footer-newsletter form {
+  display: flex;
+  margin-top: 10px;
+}
+
+.footer-newsletter input[type="email"] {
+  padding: 10px;
+  border-radius: 4px 0 0 4px;
+  border: none;
+  flex: 1;
+}
+
+.footer-newsletter button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #ff6b6b;
+  color: #fff;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.footer-newsletter button:hover {
+  background-color: #ff3b3b;
+}
+
+.footer-social {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.footer-social a img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.footer-social a:hover img {
+  transform: scale(1.2);
+  filter: brightness(0) invert(0.7);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 30px;
+  font-size: 13px;
+  color: #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-newsletter form {
+    flex-direction: column;
+  }
+  .footer-newsletter input, .footer-newsletter button {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .footer-social {
+    justify-content: center;
+  }
+}
+
+
+
+.btn-save {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-save:hover {
+  background-color: #ffe5e5;
+}
+
+.btn-save.saved {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.account-container {
+  position: relative;
+  display: inline-block;
+}
+
+.account-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #0e192e;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.account-icon:hover {
+  transform: scale(1.1);
+}
+
+.account-card {
+  position: absolute;
+  top: 50px; /* below the icon */
+  right: 0;
+  width: 220px;
+  background-color: #fff;
+  color: #333;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  padding: 15px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none; /* prevents clicking when hidden */
+  z-index: 100;
+}
+
+.account-card.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.account-card h3 {
+  margin: 0 0 5px 0;
+  font-size: 16px;
+  color: #007bff;
+}
+
+.account-card p {
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+.account-card button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: #ff5e57;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.account-card button:hover {
+  background-color: #e04e47;
+}
+
+
+
+.logout-btn {
+  margin-left: 15px;
+  padding: 6px 12px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #d9363e;
+}
+
+
+@media (max-width: 768px) {
+  .account-info-card {
+    right:0;
+    left: auto;
+    transform: translateY(-10px);
+    width: 90%;
+    top: 60px;
+    align-items: center;
+    z-index: 1000;
+    
+  }
+
+  .account-info-card h4 {
+    font-size: 16px;
+  }
+
+  .account-info-card p {
+    font-size: 13px;
+  }
+
+  .logout-btn {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .account-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .account-info-card {
+    top: 50px;
+  }
+}
+
+

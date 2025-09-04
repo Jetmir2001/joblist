@@ -1,0 +1,60 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Your Resume</title>
+  <link rel="stylesheet" href="seeker.css">
+</head>
+<body>
+  <div class="resume-container">
+    <h1 class="page-title">Create Your Resume</h1>
+
+    <!-- Resume Form -->
+    <form id="resumeForm" class="resume-form">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" placeholder="John Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" placeholder="+1 234 567 890" required>
+      </div>
+
+      <div class="form-group">
+        <label for="skills">Skills</label>
+        <textarea id="skills" placeholder="e.g. JavaScript, Project Management, UI/UX Design" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Experience</label>
+        <textarea id="experience" placeholder="List your work experience..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education</label>
+        <textarea id="education" placeholder="Add your education background..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn">✨ Generate Resume</button>
+    </form>
+
+    <!-- Resume Preview -->
+    <div id="resumePreview" class="resume-preview hidden">
+      <h2>Resume Preview</h2>
+      <div id="previewContent"></div>
+      <button id="downloadBtn" class="btn">⬇ Download as PDF</button>
+    </div>
+  </div>
+
+  <!-- html2pdf library for PDF download -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="seeker.js"></script>
+</body>
+</html>

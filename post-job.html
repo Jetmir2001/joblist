@@ -1,0 +1,156 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Post a Job — Employer</title>
+  <link rel="stylesheet" href="post-job.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>Post a Job</h1>
+      <p class="subtitle">Choose a plan, enter job details and publish</p>
+      <button id="btn">HOME</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="grid">
+
+      <!-- LEFT: Form + Plan selection -->
+      <section class="card">
+        <h2>1. Job Details</h2>
+        <form id="job-form">
+          <label>Job Title <span class="required">*</span></label>
+          <input id="job-title" name="title" type="text" required placeholder="e.g. Frontend Developer" />
+
+          <label>Company Name <span class="required">*</span></label>
+          <input id="company-name" name="company" type="text" required placeholder="Your company" />
+
+          <label>Location</label>
+          <input id="job-location" name="location" type="text" placeholder="City, Country or Remote" />
+
+          <label>Job Type</label>
+          <select id="job-type" name="type">
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Internship">Internship</option>
+            <option value="Remote">Remote</option>
+            <option value="Contract">Contract</option>
+          </select>
+
+          <label>Experience Level</label>
+          <select id="job-exp" name="experience">
+            <option value="Entry-level">Entry-level</option>
+            <option value="Mid-level">Mid-level</option>
+            <option value="Senior">Senior</option>
+          </select>
+
+          <label>Salary (optional)</label>
+          <input id="job-salary" name="salary" type="text" placeholder="e.g. €1200 - €1500 / month" />
+
+          <label>Application link / Email <span class="required">*</span></label>
+          <input id="apply-to" name="apply" type="text" required placeholder="e.g. hr@company.com or https://apply.link" />
+
+          <label>Job Description <span class="required">*</span></label>
+          <textarea id="job-desc" name="description" rows="6" required placeholder="Describe the role, responsibilities, requirements..."></textarea>
+        </form>
+
+        <hr />
+
+        <h2>2. Select a Plan</h2>
+        <div class="plans" id="plans">
+          <label class="plan">
+            <input type="radio" name="plan" value="basic" checked />
+            <div class="plan-inner">
+              <div class="plan-title">Basic (Free)</div>
+              <div class="plan-price">€0</div>
+              <div class="plan-features">1 job • 15 days • Standard visibility</div>
+            </div>
+          </label>
+
+          <label class="plan">
+            <input type="radio" name="plan" value="premium" />
+            <div class="plan-inner featured">
+              <div class="plan-title">Premium</div>
+              <div class="plan-price">€49</div>
+              <div class="plan-features">3 jobs • 30 days • Highlighted & priority</div>
+            </div>
+          </label>
+
+          <label class="plan">
+            <input type="radio" name="plan" value="enterprise" />
+            <div class="plan-inner">
+              <div class="plan-title">Enterprise</div>
+              <div class="plan-price">€129</div>
+              <div class="plan-features">Unlimited • 60 days • Top placement & support</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button id="preview-btn" class="btn">Preview</button>
+          <button id="publish-btn" class="btn primary">Publish</button>
+        </div>
+      </section>
+
+      <!-- RIGHT: Preview, Checkout, Messages -->
+      <aside class="card preview-area">
+        <h2>Preview</h2>
+        <div class="preview" id="preview">
+          <h3 id="pv-title">Job Title</h3>
+          <div class="meta">
+            <span id="pv-company">Company Name</span> •
+            <span id="pv-location">Location</span> •
+            <span id="pv-type">Type</span>
+          </div>
+          <div class="salary" id="pv-salary">Salary not specified</div>
+          <p id="pv-desc">Job description will appear here as you type.</p>
+          <div class="pv-footer">
+            <div><strong>Experience:</strong> <span id="pv-exp">N/A</span></div>
+            <div><strong>Apply:</strong> <span id="pv-apply">apply link</span></div>
+          </div>
+        </div>
+
+        <div id="checkout-card" class="checkout card hidden">
+          <h3>Checkout</h3>
+          <p><strong>Plan:</strong> <span id="co-plan">—</span></p>
+          <p><strong>Amount:</strong> <span id="co-amount">€0</span></p>
+
+          <form id="payment-form">
+            <label>Cardholder name</label>
+            <input id="card-name" type="text" placeholder="Full name" required />
+
+            <label>Card number</label>
+            <input id="card-number" type="text" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242" required />
+
+            <div class="row">
+              <div class="col">
+                <label>Expiry (MM/YY)</label>
+                <input id="card-exp" type="text" maxlength="5" placeholder="MM/YY" required />
+              </div>
+              <div class="col">
+                <label>CVC</label>
+                <input id="card-cvc" type="text" maxlength="4" inputmode="numeric" placeholder="CVC" required />
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="button" id="pay-btn" class="btn primary">Pay & Publish</button>
+              <button type="button" id="cancel-pay" class="btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="message" class="message hidden"></div>
+      </aside>
+
+    </div>
+  </main>
+
+
+
+  <script src="post-job.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Alerts</title>
+  <link rel="stylesheet" href="job-alerts.css">
+</head>
+<body>
+     <header>
+    <a href="agency.html" class="back-link">← Back to Jobs</a>
+    <h1>Job Alerts</h1>
+  </header>
+    <main class="container">
+        <section class="alert-form-card">
+            <h2>Create a Job Alert</h2>
+            <form id="alertForm">
+                <div class="form-group">
+                    <label for="keyword">Keyword</label>
+                              <input type="text" id="keyword" required placeholder="e.g. Software Engineer">
+
+                </div>
+
+                 <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" id="location" required placeholder="e.g. New York">
+        </div>
+
+        <div class="form-group">
+          <label for="jobType">Job Type</label>
+          <select id="jobType" required>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="Remote">Remote</option>
+            <option value="Internship">Internship</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" required placeholder="you@example.com">
+        </div>
+
+        <button type="submit" class="btn">Save Alert</button>
+      </form>
+    </section>
+
+    <section class="alert-list-card">
+      <h2>My Alerts</h2>
+      <ul id="alertList"></ul>
+    </section>
+            </form>
+        </section>
+    </main>
+
+     <script src="job-alerts.js"></script>
+</body>
+</html>

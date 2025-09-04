@@ -1,0 +1,258 @@
+ /* General */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 10px;
+}
+
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  background-color: #1e1e2f;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+header nav a {
+  margin-left: 20px;
+  color: white;
+  font-weight: bold;
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 28px;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.hero-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #ff7e5f;
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.hero-btn:hover {
+  background-color: #ff6a3d;
+}
+
+/* Plans */
+.plans {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.plan-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.plan-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px 20px;
+  width: 300px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.plan-card:hover {
+  transform: translateY(-10px);
+}
+
+.plan-card.featured {
+  border: 2px solid #ff7e5f;
+}
+
+.plan-card .price {
+  font-size: 28px;
+  margin: 15px 0;
+}
+
+.plan-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.plan-card li {
+  margin: 10px 0;
+}
+
+.plan-card .cta-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 25px;
+  background-color: #ff7e5f;
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.plan-card .cta-btn:hover {
+  background-color: #ff6a3d;
+}
+
+/* Contact */
+.contact {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.contact form {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact input, .contact textarea {
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.contact textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact .cta-btn {
+  padding: 12px;
+  border: none;
+  background-color: #667eea;
+  color: white;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.contact .cta-btn:hover {
+  background-color: #5a67d8;
+}
+
+.success-message {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Footer */
+footer {
+  background-color: #1e1e2f;
+  color: white;
+  padding: 25px 20px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media(max-width: 768px){
+  .plan-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  header nav {
+    display: none;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+  header.active nav {
+    display: flex;
+  }
+}
+
+
+/* Benefits / Features */
+.benefits {
+  padding: 60px 20px;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.benefit-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.benefit-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px 20px;
+  width: 280px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.benefit-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Testimonials */
+.testimonials {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.testimonial-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.testimonial-card {
+  background-color: #f4f4f4;
+  border-radius: 15px;
+  padding: 30px 20px;
+  width: 300px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  opacity: 0.7;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.testimonial-card.active {
+  opacity: 1;
+  transform: scale(1.05);
+}

@@ -1,0 +1,81 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meet Our Employers</title>
+  <link rel="stylesheet" href="employers.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">InfoStud<span>Job</span></div>
+      <nav class="nav">
+        
+        <a href="agency.html">Jobs</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <h1>Meet Our Employers</h1>
+          <p class="lead">Browse companies hiring now — filter by industry or location and open a company profile to see current vacancies.</p>
+        </div>
+        <div class="search-row">
+          <input id="searchInput" type="search" placeholder="Search company name..." aria-label="Search employers">
+          <select id="industryFilter" aria-label="Filter by industry">
+            <option value="">All industries</option>
+          </select>
+          <select id="locationFilter" aria-label="Filter by location">
+            <option value="">All locations</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="container results">
+      <div id="grid" class="grid" aria-live="polite"></div>
+
+      <div id="noResults" class="no-results hidden">No employers match your search.</div>
+    </section>
+  </main>
+
+  <!-- Profile Modal -->
+  <div id="profileModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-panel" role="document">
+      <button id="modalClose" class="modal-close" aria-label="Close profile">&times;</button>
+      <div class="modal-body">
+        <div class="modal-left">
+          <img id="modalLogo" src="" alt="" class="modal-logo">
+          <h2 id="modalName">Company Name</h2>
+          <p id="modalIndustry" class="muted"></p>
+          <p id="modalLocation" class="muted"></p>
+          <p id="modalSize" class="muted"></p>
+          <a id="modalWebsite" href="#" target="_blank" rel="noopener" class="btn-outline hidden">Visit website</a>
+        </div>
+        <div class="modal-right">
+          <h3 id="modalTitle">About</h3>
+          <p id="modalDesc">Full company description...</p>
+
+          <h4>Open positions</h4>
+          <ul id="modalJobs" class="job-list">
+            <!-- jobs inserted here -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <small>© 2025 KosovaJob — Connecting talent with employers</small>
+    </div>
+  </footer>
+
+  <script src="employers.js"></script>
+</body>
+</html>

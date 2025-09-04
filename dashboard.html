@@ -1,0 +1,73 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employer Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Employer Dashboard</h1>
+    <button id="postJobBtn">Post a Job</button>
+  </header>
+
+  <!-- Analytics Section -->
+  <section id="analytics">
+    <div class="analytics-card">
+      <h3>Total Jobs</h3>
+      <p id="totalJobs">0</p>
+    </div>
+    <div class="analytics-card">
+      <h3>Total Views</h3>
+      <p id="totalViews">0</p>
+    </div>
+    <div class="analytics-card">
+      <h3>Total Applications</h3>
+      <p id="totalApplications">0</p>
+    </div>
+  </section>
+
+  <!-- Published Jobs Table -->
+  <section id="jobList">
+    <h2>Published Jobs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Location</th>
+          <th>Plan</th>
+          <th>Views</th>
+          <th>Applications</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="jobsTableBody">
+        <!-- Filled by JS -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Edit Job Modal -->
+  <div id="editJobModal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModal">&times;</span>
+      <h2>Edit Job</h2>
+      <form id="editJobForm">
+        <label>Job Title</label>
+        <input type="text" id="editTitle" required>
+
+        <label>Location</label>
+        <input type="text" id="editLocation" required>
+
+        <label>Description</label>
+        <textarea id="editDescription" required></textarea>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

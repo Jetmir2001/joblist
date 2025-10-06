@@ -1,196 +1,121 @@
- // Lightweight, self-contained client-side logic
-document.addEventListener("DOMContentLoaded", () => {
+ 
+    document.addEventListener("DOMContentLoaded", () => {
+      const jobForm = document.getElementById("job-form");
+      const jobListContainer = document.getElementById("job-listings");
+      const deleteModal = document.getElementById("delete-modal"); // plain modal div
+const cancelDeleteBtn = document.getElementById("cancel-delete"); // Cancel button inside modal
 
-  // Elements
-  const jobForm = document.getElementById("job-form");
-  const preview = {
-    title: document.getElementById("pv-title"),
-    company: document.getElementById("pv-company"),
-    location: document.getElementById("pv-location"),
-    type: document.getElementById("pv-type"),
-    salary: document.getElementById("pv-salary"),
-    desc: document.getElementById("pv-desc"),
-    exp: document.getElementById("pv-exp"),
-    apply: document.getElementById("pv-apply")
-  };
-  const previewBox = document.getElementById("preview");
-  const previewBtn = document.getElementById("preview-btn");
-  const publishBtn = document.getElementById("publish-btn");
-  const checkoutCard = document.getElementById("checkout-card");
-  const coPlan = document.getElementById("co-plan");
-  const coAmount = document.getElementById("co-amount");
-  const payBtn = document.getElementById("pay-btn");
-  const cancelPay = document.getElementById("cancel-pay");
-  const messageBox = document.getElementById("message");
+      const confirmDeleteBtn = document.getElementById("confirm-delete");
 
-  const resetMessage = () => {
-    messageBox.className = "message hidden";
-    messageBox.innerHTML = "";
-  };
+      let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+      let editIndex = null;
+      let deleteIndex = null;
 
-  // Read values from form fields
-  function readForm() {
-    return {
-      title: document.getElementById("job-title").value.trim(),
-      company: document.getElementById("company-name").value.trim(),
-      location: document.getElementById("job-location").value.trim(),
-      type: document.getElementById("job-type").value,
-      experience: document.getElementById("job-exp").value,
-      salary: document.getElementById("job-salary").value.trim(),
-      applyTo: document.getElementById("apply-to").value.trim(),
-      description: document.getElementById("job-desc").value.trim(),
-      plan: (document.querySelector('input[name="plan"]:checked') || {}).value || "basic"
-    };
-  }
-
-  // Update preview UI
-  function updatePreview() {
-    const data = readForm();
-    preview.title.textContent = data.title || "Job Title";
-    preview.company.textContent = data.company || "Company Name";
-    preview.location.textContent = data.location || "Location";
-    preview.type.textContent = data.type || "Type";
-    preview.salary.textContent = data.salary || "Salary not specified";
-    preview.desc.textContent = data.description || "Job description will appear here.";
-    preview.exp.textContent = data.experience || "N/A";
-    preview.apply.textContent = data.applyTo || "Apply link / email";
-  }
-
-  // Save job to localStorage (array)
-  function saveJob(jobObj) {
-    const jobs = JSON.parse(localStorage.getItem("postedJobs") || "[]");
-    jobs.push(jobObj);
-    localStorage.setItem("postedJobs", JSON.stringify(jobs));
-  }
-
-  // Basic validation
-  function validate(data){
-    if(!data.title) return "Please enter a job title.";
-    if(!data.company) return "Please enter company name.";
-    if(!data.applyTo) return "Please provide application link or email.";
-    if(!data.description) return "Please add a job description.";
-    return null;
-  }
-
-  // Compute price from plan
-  function planPrice(plan){
-    if(plan === "basic") return 0;
-    if(plan === "premium") return 49;
-    if(plan === "enterprise") return 129;
-    return 0;
-  }
-
-  // Wire up input -> preview live
-  ["job-title","company-name","job-location","job-type","job-salary","job-desc","job-exp","apply-to"].forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) el.addEventListener("input", updatePreview);
-  });
-
-  // Preview button
-  previewBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    updatePreview();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    resetMessage();
-    messageBox.className = "message";
-    messageBox.textContent = "Preview updated.";
-    setTimeout(resetMessage, 1500);
-  });
-
-  // Publish click
-  publishBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    resetMessage();
-
-    const data = readForm();
-    const err = validate(data);
-    if(err){
-      messageBox.className = "message error";
-      messageBox.textContent = err;
-      return;
-    }
-
-    const price = planPrice(data.plan);
-    if(price === 0){
-      // Free posting -> save immediately
-      saveJob({
-        ...data,
-        publishedAt: new Date().toISOString(),
-        paid: false
-      });
-      messageBox.className = "message success";
-      messageBox.textContent = "✅ Job posted successfully (Basic - free).";
-      // Optionally clear form
-      jobForm.reset();
-      updatePreview();
-      return;
-    }
-
-    // Paid: show checkout card
-    checkoutCard.classList.remove("hidden");
-    coPlan.textContent = data.plan.charAt(0).toUpperCase() + data.plan.slice(1);
-    coAmount.textContent = `€${price}`;
-    // scroll to checkout
-    checkoutCard.scrollIntoView({behavior:"smooth",block:"center"});
-  });
-
-  // Cancel payment
-  cancelPay.addEventListener("click", () => {
-    checkoutCard.classList.add("hidden");
-  });
-
-  // Simulate payment flow
-  payBtn.addEventListener("click", () => {
-    // Minimal client-side validation of card fields (demo only)
-    const cardName = document.getElementById("card-name").value.trim();
-    const cardNum = document.getElementById("card-number").value.replace(/\s+/g,"");
-    const cardExp = document.getElementById("card-exp").value.trim();
-    const cardCvc = document.getElementById("card-cvc").value.trim();
-
-    if(!cardName || cardNum.length < 12 || cardCvc.length < 3 || cardExp.length < 3) {
-      messageBox.className = "message error";
-      messageBox.textContent = "Please fill valid payment details (demo validation).";
-      return;
-    }
-
-    // simulate processing
-    payBtn.disabled = true;
-    payBtn.textContent = "Processing…";
-
-    setTimeout(() => {
-      // After "payment", save job with paid:true
-      const data = readForm();
-      const price = planPrice(data.plan);
-      saveJob({
-        ...data,
-        publishedAt: new Date().toISOString(),
-        paid: true,
-        amount: price
-      });
-
-      // success UI
-      checkoutCard.classList.add("hidden");
-      messageBox.className = "message success";
-      messageBox.textContent = `✅ Payment successful. Job posted under ${data.plan} plan.`;
-      // reset
-      document.getElementById("payment-form").reset();
-      document.getElementById("card-name").value = "";
-      document.getElementById("card-number").value = "";
-      document.getElementById("card-exp").value = "";
-      document.getElementById("card-cvc").value = "";
-      payBtn.disabled = false;
-      payBtn.textContent = "Pay & Publish";
-      jobForm.reset();
-      updatePreview();
-    }, 1100);
-  });
-
-  // Initialize preview on load
-  updatePreview();
+//cancel modal
+          cancelDeleteBtn.addEventListener("click", () => {
+  deleteIndex = null;
+  deleteModal.classList.add("hidden"); // Hide modal
 });
 
 
-const btn = document.getElementById("btn");
-  btn.addEventListener("click", () => {
-    window.location.href = "agency.html";
-  });
+      // Render Jobs
+function renderJobs() {
+  jobListContainer.innerHTML = jobs.map((job, index) => `
+    <div class="card card-side bg-base-100 shadow-lg fade-in p-4 items-center space-x-4 rounded-lg">
+      <img src="${job.logo || 'https://via.placeholder.com/50'}" alt="${job.company} Logo" class="job-logo-tiny">
+      <div class="flex-1">
+        <h2 class="card-title text-lg font-bold">${job.title}</h2>
+        <p><strong>Company:</strong> ${job.company}</p>
+        <p><strong>Location:</strong> ${job.location}</p>
+        <p><strong>Type:</strong> ${job.type}</p>
+        <p><strong>Category:</strong> ${job.category}</p>
+        <p><strong>Details:</strong> ${job.details}</p>
+
+        <div class="flex space-x-2 mt-4">
+          <button 
+            class="btn btn-sm rounded-lg text-white px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 shadow-md hover:scale-105 hover:shadow-lg transition-transform edit-btn" 
+            data-index="${index}">
+            Edit
+          </button>
+          <button 
+            class="btn btn-sm rounded-lg text-white px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 shadow-md hover:scale-105 hover:shadow-lg transition-transform delete-btn" 
+            data-index="${index}">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+
+
+
+
+      // Initial render
+      renderJobs();
+
+      // Post or Edit Job
+      jobForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const job = {
+           id: Date.now(),
+          title: document.getElementById("job-title").value,
+          company: document.getElementById("job-company").value,
+          location: document.getElementById("job-location").value,
+          type: document.getElementById("job-type").value,
+          category: document.getElementById("job-category").value,
+          logo: document.getElementById("job-logo").value,
+          details: document.getElementById("job-details").value,
+
+          date: "Just now"
+        };
+
+        if (editIndex !== null) {
+          jobs[editIndex] = job;
+          editIndex = null;
+        } else {
+          jobs.push(job);
+        }
+
+        localStorage.setItem("jobs", JSON.stringify(jobs));
+        renderJobs();
+        jobForm.reset();
+      });
+
+      // Edit & Delete buttons
+      jobListContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("edit-btn")) {
+          editIndex = e.target.dataset.index;
+          const job = jobs[editIndex];
+          document.getElementById("job-title").value = job.title;
+          document.getElementById("job-company").value = job.company;
+          document.getElementById("job-location").value = job.location;
+          document.getElementById("job-type").value = job.type;
+          document.getElementById("job-category").value = job.category;
+          document.getElementById("job-logo").value = job.logo;
+        }
+
+if (e.target.classList.contains("delete-btn")) {
+  deleteIndex = e.target.dataset.index;
+  deleteModal.classList.remove("hidden"); // ✅ Show modal
+}
+
+
+      });
+
+      // Confirm delete
+      confirmDeleteBtn.addEventListener("click", () => {
+        if (deleteIndex !== null) {
+          jobs.splice(deleteIndex, 1);
+          localStorage.setItem("jobs", JSON.stringify(jobs));
+          renderJobs();
+          deleteIndex = null;
+         deleteModal.classList.add("hidden"); // ✅ Hide modal
+
+
+        }
+      });
+    });
+
+

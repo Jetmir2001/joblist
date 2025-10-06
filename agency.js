@@ -1,10 +1,19 @@
- // ================================
-// AGENCY.JS - CLEAN VERSION
+   // ================================
+// AGENCY.JS - FULLY WORKING VERSION
 // ================================
 document.addEventListener("DOMContentLoaded", () => {
 
   // ------------------------------
-  // 1. JOB SEARCH & FILTER
+  // 1. AUTH CHECK
+  // ------------------------------
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!loggedInUser) {
+    window.location.href = "signup.html";
+    return;
+  }
+
+  // ------------------------------
+  // 2. JOB SEARCH & FILTER
   // ------------------------------
   const keywordInput = document.getElementById("search-keyword");
   const locationInput = document.getElementById("search-location");
@@ -13,44 +22,142 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchBtn = document.getElementById("search-btn");
   const clearBtn = document.getElementById("clear-btn");
   const categoryButtons = document.querySelectorAll(".categories button");
-  const jobCards = document.querySelectorAll(".job-card");
+  const jobListContainer = document.querySelector(".job-listings");
   const noResults = document.getElementById("no-results");
 
   let selectedCategory = "";
+  let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
 
+  // ------------------------------
+  // 3. POPULATE DEFAULT JOBS IF NONE
+  // ------------------------------
+  if (jobs.length === 0) {
+    jobs = [
+      { title: "Frontend Developer", company: "TechNova", location: "Prishtinë", type: "Remote", category: "IT", date: "2 days ago", logo: "webdev.jpg" },
+      { title: "Backend Developer", company: "CodeWorks", location: "Prizren", type: "Full-time", category: "IT", date: "1 week ago", logo: "be.jpg" },
+      { title: "Team Member", company: "Burger King", location: "Gjakove", type: "Full-time", category: "Hospitality", date: "1 week ago", logo: "bg.jpg" },
+      { title: "Waiter", company: "Troja", location: "Prishtine", type: "Full-time", category: "Hospitality", date: "1 week ago", logo: "restaurant.jpg" },
+      { title: "Sales person", company: "CodeWorks", location: "Peja", type: "Full-time", category: "Sales", date: "1 week ago", logo: "hr.jpg" },
+      { title: "Mechanic", company: "Auto repair", location: "Prishtine", type: "Full-time", category: "Content", date: "1 week ago", logo: "ash.jpg" },
+      { title: "Construction", company: "BuiltA", location: "Gjilan", type: "Full-time", category: "Management", date: "1 week ago", logo: "csc.jpg" },
+      { title: "Accountant", company: "AL Bank", location: "Ferizaj", type: "Full-time", category: "Finance", date: "1 week ago", logo: "bank.jpg" },
+      { title: "Graphic designer", company: "GD", location: "Prishtine", type: "Full-time", category: "Design", date: "1 week ago", logo: "creat.jpg" },
+      { title: "Cyber security", company: "CodeWorks", location: "Peja", type: "Full-time", category: "IT", date: "1 week ago", logo: "csl.jpg" },
+    
+     
+
+      // Add more default jobs if needed
+    ];
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+  }
+
+  // ------------------------------
+  // 4. RENDER JOBS FUNCTION
+  // ------------------------------
+function renderJobs(jobData) {
+  let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+
+ jobListContainer.innerHTML = ""; // clear container
+
+jobData.forEach((job, index) => {
+  const isBookmarked = bookmarks.some(
+    b => b.title === job.title && b.company === job.company
+  );
+
+  const card = document.createElement("div");
+  card.classList.add("job-card", "fade-in");
+  card.dataset.category = job.category;
+  card.dataset.location = job.location;
+  card.dataset.type = job.type;
+  card.dataset.experience = job.experience || "";
+
+  card.innerHTML = `
+    <img src="${job.logo}" alt="${job.company} Logo" class="job-logo">
+    <h3>${job.title}</h3>
+    <p><strong>Company:</strong> ${job.company}</p>
+    <p><strong>Location:</strong> ${job.location}</p>
+    <p><strong>Type:</strong> ${job.type}</p>
+    <p><strong>Date:</strong> ${job.date}</p>
+    <button class="bookmark-btn ${isBookmarked ? "active" : ""}" 
+            data-index="${index}" 
+            title="Save Job">🔖</button>
+  `;
+
+  // Apply Now button
+  const applyBtn = document.createElement("button");
+  applyBtn.textContent = "Apply Now";
+  applyBtn.classList.add("btn1");
+  applyBtn.addEventListener("click", () => {
+    sessionStorage.setItem("selectedJob", JSON.stringify(job));
+    window.location.href = "detaje.html";
+  });
+
+  card.appendChild(applyBtn);
+  jobListContainer.appendChild(card);
+});
+
+
+
+  // Attach bookmark listeners
+  document.querySelectorAll(".bookmark-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const idx = e.target.dataset.index;
+      toggleBookmark(jobData[idx], e.target);
+    });
+  });
+}
+
+// ------------------------------
+// Toggle bookmark function
+function toggleBookmark(job, button) {
+  let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+
+  const index = bookmarks.findIndex(
+    b => b.title === job.title && b.company === job.company
+  );
+
+  if (index === -1) {
+    // Add bookmark
+    bookmarks.push(job);
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    button.classList.add("active");
+  } else {
+    // Remove bookmark
+    bookmarks.splice(index, 1);
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    button.classList.remove("active");
+  }
+}
+
+
+
+
+  // Initial render
+  renderJobs(jobs);
+
+  // ------------------------------
+  // 5. FILTER JOBS FUNCTION
+  // ------------------------------
   function filterJobs() {
     const keyword = keywordInput.value.toLowerCase();
     const location = locationInput.value.toLowerCase();
     const type = typeSelect.value;
     const experience = experienceSelect.value;
 
-    let visibleCount = 0;
-
-    jobCards.forEach(card => {
-      const title = card.querySelector("h3").textContent.toLowerCase();
-      const company = card.querySelector("p strong")?.parentNode.textContent.toLowerCase() || "";
-      const jobLocation = card.dataset.location.toLowerCase();
-      const category = card.dataset.category;
-      const jobType = card.dataset.type;
-      const jobExperience = card.dataset.experience || "";
-
+    const filtered = jobs.filter(job => {
+      const title = job.title.toLowerCase();
+      const company = job.company.toLowerCase();
       const matchesKeyword = !keyword || title.includes(keyword) || company.includes(keyword);
-      const matchesLocation = !location || jobLocation.includes(location);
-      const matchesCategory = !selectedCategory || category === selectedCategory;
-      const matchesType = !type || jobType === type;
-      const matchesExperience = !experience || jobExperience === experience;
+      const matchesLocation = !location || job.location.toLowerCase().includes(location);
+      const matchesCategory = !selectedCategory || job.category === selectedCategory;
+      const matchesType = !type || job.type === type;
+      const matchesExperience = !experience || (job.experience && job.experience === experience);
 
-      if (matchesKeyword && matchesLocation && matchesCategory && matchesType && matchesExperience) {
-        card.style.display = "block";
-        card.classList.add("fade-in");
-        visibleCount++;
-      } else {
-        card.style.display = "none";
-        card.classList.remove("fade-in");
-      }
+      return matchesKeyword && matchesLocation && matchesCategory && matchesType && matchesExperience;
     });
 
-    noResults.style.display = visibleCount === 0 ? "block" : "none";
+    renderJobs(filtered);
+    noResults.style.display = filtered.length === 0 ? "block" : "none";
   }
 
   searchBtn?.addEventListener("click", filterJobs);
@@ -62,10 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     experienceSelect.value = "";
     selectedCategory = "";
     categoryButtons.forEach(btn => btn.classList.remove("active"));
-    jobCards.forEach(card => {
-      card.style.display = "block";
-      card.classList.add("fade-in");
-    });
+    renderJobs(jobs);
     noResults.style.display = "none";
   });
 
@@ -78,60 +182,45 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Show all jobs initially
-  jobCards.forEach(card => card.style.display = "block");
-
+  // ------------------------------
+  // 6. JOB CARD NAVIGATION
+  // ------------------------------
+  window.goToJob = function(index) {
+    window.location.href = `detaje.html?id=${index}`;
+  };
 
   // ------------------------------
-  // 2. JOB CARD NAVIGATION
+  // 7. USER ACCOUNT INFO (DROPDOWN)
   // ------------------------------
-  jobCards.forEach((card, index) => {
-    const btn = card.querySelector(".btn1");
-    if (btn) {
-      btn.addEventListener("click", () => {
-        window.location.href = `detaje.html?id=${index}`;
-      });
-    }
-  });
+  const accountIcon = document.getElementById("account-icon");
+  const accountCard = document.getElementById("account-card");
 
+  if (accountIcon && accountCard) {
+    document.getElementById("acc-name").textContent = loggedInUser.name;
+    document.getElementById("acc-email").textContent = loggedInUser.email;
+    document.getElementById("acc-role").textContent = loggedInUser.role;
+    accountIcon.textContent = loggedInUser.name[0].toUpperCase();
 
-  // ------------------------------
-  // 3. DYNAMIC USER ICON (if logged in)
-  // ------------------------------
-  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-  const userInfoDiv = document.getElementById("user-info");
+    accountIcon.addEventListener("click", () => {
+      accountCard.classList.toggle("show");
+      accountCard.classList.toggle("hidden");
+    });
 
-  if (loggedInUser && userInfoDiv) {
-    const icon = document.createElement("div");
-    icon.className = "user-icon";
-    icon.textContent = loggedInUser.name[0].toUpperCase();
-
-    const info = document.createElement("div");
-    info.className = "user-hover-info";
-    info.innerHTML = `
-      <p><strong>${loggedInUser.name}</strong></p>
-      <p>${loggedInUser.email}</p>
-      <p>Role: ${loggedInUser.role}</p>
-      <button id="logout-btn">Logout</button>
-    `;
-
-    userInfoDiv.appendChild(icon);
-    userInfoDiv.appendChild(info);
-
-    icon.addEventListener("mouseenter", () => info.style.display = "block");
-    icon.addEventListener("mouseleave", () => info.style.display = "none");
-    info.addEventListener("mouseenter", () => info.style.display = "block");
-    info.addEventListener("mouseleave", () => info.style.display = "none");
+    document.addEventListener("click", (e) => {
+      if (!accountIcon.contains(e.target) && !accountCard.contains(e.target)) {
+        accountCard.classList.add("hidden");
+        accountCard.classList.remove("show");
+      }
+    });
 
     document.getElementById("logout-btn").addEventListener("click", () => {
       localStorage.removeItem("loggedInUser");
-      window.location.reload();
+      window.location.href = "signup.html";
     });
   }
 
-
   // ------------------------------
-  // 4. RESPONSIVE NAVBAR TOGGLE
+  // 8. RESPONSIVE NAVBAR TOGGLE
   // ------------------------------
   const hamburger = document.getElementById("hamburger");
   const navbar = document.getElementById("navbar");
@@ -139,51 +228,5 @@ document.addEventListener("DOMContentLoaded", () => {
   hamburger?.addEventListener("click", () => {
     navbar.classList.toggle("show");
   });
-
 });
 
-
-
-//account info
-
-document.addEventListener("DOMContentLoaded", () => {
-  const accountIcon = document.getElementById("account-icon");
-  const accountCard = document.getElementById("account-card");
-  const logoutBtn = document.getElementById("logout-btn");
-
-  // Toggle account card on icon click
-  accountIcon.addEventListener("click", () => {
-    accountCard.classList.toggle("show");
-    accountCard.classList.toggle("hidden");
-  });
-
-  // Close when clicking outside
-  document.addEventListener("click", (e) => {
-    if (!accountIcon.contains(e.target) && !accountCard.contains(e.target)) {
-      accountCard.classList.add("hidden");
-      accountCard.classList.remove("show");
-    }
-  });
-
-  // Logout button functionality
-  logoutBtn.addEventListener("click", () => {
-    alert("Logged out!");
-    // redirect or clear sessionStorage if you’re using it
-    sessionStorage.clear();
-    window.location.href = "signup.html";
-  });
-
-  // Fill user info dynamically if saved in sessionStorage
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  if (user) {
-    document.getElementById("acc-name").textContent = user.name || "John Doe";
-    document.getElementById("acc-email").textContent = user.email || "john@example.com";
-    document.getElementById("acc-role").textContent = user.role || "Job Seeker";
-    document.getElementById("account-icon").textContent = user.name ? user.name[0].toUpperCase() : "J";
-  }
-});
-
-
-
-
-//bookmark

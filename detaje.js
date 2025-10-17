@@ -236,6 +236,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const jobDetailsContainer = document.getElementById("job-details");
 
+
+  let selectedJob = JSON.parse(sessionStorage.getItem("selectedJob"));
+
+
+  // ✅ Server fallback: if no job found in sessionStorage, fetch by ID from backend
+if (!selectedJob) {
+  const jobId = new URLSearchParams(window.location.search).get("id");
+  if (jobId) {
+    fetch(`http://localhost:4000/api/jobs/${jobId}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data) {
+          selectedJob = data;
+          jobDetailsContainer.innerHTML = `
+            <div class="job-details-card">
+              <h2>${selectedJob.title}</h2>
+              <p><strong>Company:</strong> ${selectedJob.company}</p>
+              <p><strong>Location:</strong> ${selectedJob.location}</p>
+              <p><strong>Type:</strong> ${selectedJob.type}</p>
+              <p><strong>Category:</strong> ${selectedJob.category}</p>
+              <p><strong>Description:</strong> ${selectedJob.details}</p>
+            </div>
+          `;
+        }
+      })
+      .catch(err => console.warn("Server not reachable, no job details", err));
+  }
+}
+
+
+
+
+
+
   // 1. Get job from sessionStorage (Apply Now click)
   let job = JSON.parse(sessionStorage.getItem("selectedJob"));
 
@@ -248,6 +282,9 @@ document.addEventListener("DOMContentLoaded", () => {
       job = jobs[jobIndex];
     }
   }
+
+
+
 
   // 3. If still no job, show error
   if (!job) {
